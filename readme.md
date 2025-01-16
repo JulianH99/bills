@@ -13,3 +13,8 @@
 - `bills paid [name]`
 - `bills startup`:  can be `bills` for short
     - will start the service to check every day if the bills need to be reset or not (due to a start of month) 
+
+
+## TODO:
+- Better ui
+- Database management on only one place

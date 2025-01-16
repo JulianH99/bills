@@ -3,7 +3,6 @@ package cmd
 import (
 	"database/sql"
 	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -16,11 +15,10 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-func ExecuteRootCommand(db *sql.DB) {
+func CreateRootCommand(db *sql.DB) *cobra.Command {
 	rootCmd.AddCommand(addCmd(db))
 	rootCmd.AddCommand(listCmd(db))
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Printf("An error ocurred. Error: %v", err)
-		os.Exit(1)
-	}
+	rootCmd.AddCommand(removeCmd(db))
+	rootCmd.AddCommand(paidCmd(db))
+	return rootCmd
 }

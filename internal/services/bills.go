@@ -2,6 +2,7 @@ package services
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -34,6 +35,10 @@ func GetByName(db *sql.DB, name string) (Bill, error) {
 
 	res := db.QueryRow("select name, day_of_month, paid from bills where name = ?", name)
 	err := res.Scan(&bill.Name, &bill.DayOfMonth, &bill.Paid)
+	if errors.Is(err, sql.ErrNoRows) {
+		return Bill{}, nil
+	}
+
 	if err != nil {
 		return Bill{}, err
 	}
@@ -59,4 +64,22 @@ func ListBills(db *sql.DB) ([]Bill, error) {
 	}
 
 	return bills, nil
+}
+
+func RemoveBill(db *sql.DB, name string) (int, error) {
+	res, err := db.Exec("delete from bills where name = ?", name)
+	if err != nil {
+		return 0, err
+	}
+	rows, err := res.RowsAffected()
+	return int(rows), err
+}
+
+func Paid(db *sql.DB, name string) (int, error) {
+	res, err := db.Exec("update bills set paid = true where name = ?", name)
+	if err != nil {
+		return 0, err
+	}
+	rows, err := res.RowsAffected()
+	return int(rows), err
 }
