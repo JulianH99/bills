@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 
@@ -15,12 +16,9 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-func init() {
-	rootCmd.AddCommand(addCmd)
-	rootCmd.AddCommand(listCmd)
-}
-
-func ExecuteRoodCommand() {
+func ExecuteRootCommand(db *sql.DB) {
+	rootCmd.AddCommand(addCmd(db))
+	rootCmd.AddCommand(listCmd(db))
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Printf("An error ocurred. Error: %v", err)
 		os.Exit(1)
