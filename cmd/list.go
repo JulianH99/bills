@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/JulianH99/bills/internal/services"
+	"github.com/JulianH99/bills/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -18,9 +19,9 @@ func listCmd(db *sql.DB) *cobra.Command {
 				return err
 			}
 
-			for _, b := range bills {
-				fmt.Println(b.Name)
-			}
+			table := ui.PrintAsTable(bills)
+
+			fmt.Printf("%s\n", table)
 
 			return nil
 		},
