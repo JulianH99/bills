@@ -2,14 +2,16 @@ package ui
 
 import "github.com/charmbracelet/lipgloss"
 
+var messageStyle = lipgloss.NewStyle().
+	Border(lipgloss.NormalBorder()).
+	Padding(1)
+
 func Message(text string, isError bool) string {
-	style := lipgloss.NewStyle().
-		Border(lipgloss.NormalBorder()).
-		Padding(1)
+	var style lipgloss.Style
 	if isError {
-		style = style.BorderForeground(lipgloss.Color("#ff0000"))
+		style = messageStyle.BorderForeground(lipgloss.Color("#ff0000"))
 	} else {
-		style = style.BorderForeground(lipgloss.Color("#ffffff"))
+		style = messageStyle.BorderForeground(lipgloss.Color("#ffffff"))
 	}
 
 	return style.Render(text)

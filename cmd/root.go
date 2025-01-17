@@ -20,5 +20,6 @@ func CreateRootCommand(db *sql.DB) *cobra.Command {
 	rootCmd.AddCommand(listCmd(db))
 	rootCmd.AddCommand(removeCmd(db))
 	rootCmd.AddCommand(paidCmd(db))
+	rootCmd.AddCommand(setCmd(db))
 	return rootCmd
 }

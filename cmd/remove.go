@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/JulianH99/bills/internal/services"
+	"github.com/JulianH99/bills/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -25,11 +26,11 @@ func removeCmd(db *sql.DB) *cobra.Command {
 			}
 
 			if rows == 0 {
-				fmt.Printf("Bill \"%s\" not found\n", name)
+				fmt.Println(ui.Message(fmt.Sprintf("Bill \"%s\" not found\n", name), false))
 				return nil
 			}
 
-			fmt.Printf("Bill \"%s\" removed\n", name)
+			fmt.Println(ui.Message(fmt.Sprintf("Bill \"%s\" removed\n", name), false))
 			return nil
 		},
 	}

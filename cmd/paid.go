@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/JulianH99/bills/internal/services"
+	"github.com/JulianH99/bills/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -26,11 +27,12 @@ func paidCmd(db *sql.DB) *cobra.Command {
 			}
 
 			if rows == 0 {
-				fmt.Printf("Bill \"%s\" not found\n", name)
+				fmt.Println(ui.Message(fmt.Sprintf("Bill \"%s\" not found", name), false))
+
 				return nil
 			}
 
-			fmt.Printf("Paid bill \"%s\"\n", name)
+			fmt.Println(ui.Message(fmt.Sprintf("Paid bill \"%s\"", name), false))
 
 			return nil
 		},

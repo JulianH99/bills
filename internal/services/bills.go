@@ -83,3 +83,11 @@ func Paid(db *sql.DB, name string) (int, error) {
 	rows, err := res.RowsAffected()
 	return int(rows), err
 }
+
+func Update(db *sql.DB, bill Bill) error {
+	_, err := db.Exec("update bills set name = ?, day_of_month = ? where name = ?", bill.Name, bill.DayOfMonth, bill.Name)
+	if err != nil {
+		return err
+	}
+	return nil
+}
