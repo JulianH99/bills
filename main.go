@@ -6,6 +6,7 @@ import (
 
 	"github.com/JulianH99/bills/cmd"
 	"github.com/JulianH99/bills/internal/data"
+	"github.com/JulianH99/bills/internal/ui"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 
 	rootCmd := cmd.CreateRootCommand(database.Instance())
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Printf("An error ocurred. Error: %v", err)
+		fmt.Println(ui.Message(err.Error(), true))
 		os.Exit(1)
 	}
 }

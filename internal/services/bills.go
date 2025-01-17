@@ -19,7 +19,7 @@ func SaveBill(db *sql.DB, bill Bill) error {
 	}
 
 	if b.Name != "" {
-		return fmt.Errorf("Bill with the name \"%s\" already exists\n", bill.Name)
+		return fmt.Errorf("Bill with the name \"%s\" already exists", bill.Name)
 	}
 
 	_, err = db.Exec(`insert into bills (name, day_of_month, paid) values (?, ?, ?)`, bill.Name, bill.DayOfMonth, bill.Paid)
@@ -49,7 +49,7 @@ func GetByName(db *sql.DB, name string) (Bill, error) {
 func ListBills(db *sql.DB) ([]Bill, error) {
 	var bills []Bill
 
-	rows, err := db.Query("select name, day_of_month, paid from bills")
+	rows, err := db.Query("select name, day_of_month, paid from bills order by paid")
 	if err != nil {
 		return nil, err
 	}

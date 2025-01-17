@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/JulianH99/bills/internal/services"
+	"github.com/JulianH99/bills/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -43,7 +44,7 @@ func addCmd(db *sql.DB) *cobra.Command {
 				return err
 			}
 
-			fmt.Printf("Bill %s added\n", name)
+			fmt.Print(ui.Message(fmt.Sprintf("Bill %s added", name), false))
 
 			return nil
 		},
