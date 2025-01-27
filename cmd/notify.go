@@ -11,6 +11,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	notifyCmdName = "notify"
+	severity      = "critical"
+	appName       = "gbills"
+	expireTime    = "3000"
+)
+
 func notifyCmd(db *sql.DB) *cobra.Command {
 	return &cobra.Command{
 		Use: "notify",
@@ -19,6 +26,10 @@ func notifyCmd(db *sql.DB) *cobra.Command {
 			bills, err := services.ListBillsSoonToBePaid(db, daysBefore)
 			if err != nil {
 				return err
+			}
+
+			if len(bills) == 0 {
+				return nil
 			}
 
 			sb := strings.Builder{}
@@ -31,10 +42,12 @@ func notifyCmd(db *sql.DB) *cobra.Command {
 
 			fmt.Println("icon", cfg.IconPath)
 
-			_, err = exec.Command("notify-send",
-				"--urgency", "critical",
+			// TODO: add windows support
+			_, err = exec.Command(notifyCmdName,
+				"--urgency", severity,
 				"--icon", cfg.IconPath,
-				"--app-name", "gbills",
+				"--app-name", appName,
+				"--expire-time", expireTime,
 				"Bills to be paid", sb.String(),
 			).Output()
 			if err != nil {
