@@ -109,8 +109,10 @@ func Paid(db *sql.DB, name string) (int, error) {
 
 func Update(db *sql.DB, bill Bill) error {
 	_, err := db.Exec("update bills set name = ?, day_of_month = ? where name = ?", bill.Name, bill.DayOfMonth, bill.Name)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
+}
+
+func Reset(db *sql.DB) error {
+	_, err := db.Exec("update bills set paid = false")
+	return err
 }
