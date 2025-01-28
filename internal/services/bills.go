@@ -8,9 +8,9 @@ import (
 )
 
 type Bill struct {
-	Name       string
-	DayOfMonth int
-	Paid       bool
+	Name       string `json:"name"`
+	DayOfMonth int    `json:"dayOfMonth"`
+	Paid       bool   `json:"paid"`
 }
 
 func SaveBill(db *sql.DB, bill Bill) error {
